@@ -120,6 +120,7 @@ ENGINE=INNODB;
 
 ## INSERCION DE DATOS
 
+## Insertar marcas de vehiculos
 ```
 INSERT INTO marca
 (nombre_marca) VALUES ('SEAT');
@@ -137,8 +138,7 @@ INSERT INTO marca
 (nombre_marca) VALUES ('IVECO');
 ```
 
-
-
+## Insertar categoria de veiculos
 ```
 INSERT INTO categoria
 (tipo)VALUES('turismo');
@@ -156,6 +156,7 @@ INSERT INTO categoria
 (tipo)VALUES('autocvaravana');
 ```
 
+## Insertar modelos de vehiculos
 ```
 INSERT INTO modelo
 (modelo, id_marca, id_categoria) VALUES ('COMBO', '1', '2');
@@ -189,6 +190,7 @@ INSERT INTO modelo
 (modelo, id_marca, id_categoria) VALUES ('DAILY MMA 3500', '7', '5');
 ```
 
+## Insertar vehiculos en stock
 ```
 INSERT INTO vehiculo
 (matricula, id_modelo, itv, id_categoria) VALUES ('0000BBB', '1', '2018', '2');
@@ -278,6 +280,7 @@ INSERT INTO clientes
 VALUES ('Juan','Limones','Diaz','22222222C','654654456','hombre','ESP','1962-03-18');
 ```
 
+## Insertar reservas de vehiculos
 ```
 INSERT INTO `reservas`(`trayecto`, `fecha_alquiler`, `inicio_alquiler`, `fin_alquiler`, `id_vehiculo`, `id_cliente`) 
 VALUES ('Sevilla/Huelva','2022-02-28','00:00:00','10:00:00','4','1');
@@ -299,7 +302,7 @@ INSERT INTO `reservas`(`trayecto`, `fecha_alquiler`, `inicio_alquiler`, `fin_alq
 VALUES ('Girona/Barcelona','2022-03-12','11:00:00','15:00:00','22','6');
 ```
 
-SOLUCION DE CONSULTAS PROPUESTAS
+## SOLUCION DE CONSULTAS PROPUESTAS
 
 1.1 Muestra la cantidad de vehículos que tenemos de cada categoría, mostrando el nombre de la categoría y al lado la cantidad
 con el alias “Total_Vehículos”. (0.2 puntos)
@@ -314,11 +317,8 @@ WHERE (c.id_categoria = v.id_categoria)
 GROUP BY v.id_categoria
 ```
 
-
-
 1.2 Muestra toda la información de los clientes mayores a 40 años.
 (0.2 puntos)
-
 ```
 SELECT 
 *
@@ -329,10 +329,7 @@ WHERE
 ```
 
 Muestra el nombre de los clientes que no tengan ninguna reserva realizada. (0.2 puntos)
-
 Muestra todos los datos de los vehículos que se hayan reservado más de una vez. (0.2 puntos)
-
-
 ```
 SELECT
 c.nombre_cliente AS Clientes_sin_reserva
@@ -345,16 +342,12 @@ WHERE  NOT EXISTS(
 )
 ```
 
-
-
 Muestra todos los datos de los vehículos que se hayan reservado más de una vez. (0.2 puntos)
 ```
 SELECT v.* FROM vehiculo v WHERE v.id_vehiculo IN (
 SELECT id_vehiculo FROM reservas r GROUP BY r.id_vehiculo HAVING COUNT(id_vehiculo)>1
 )
 ```
-
-
 
 Muestra la matrícula de los coches que hayan pasado la itv antes del año 2020. (0.2 puntos)
 ```
@@ -441,7 +434,7 @@ HAVING COUNT(r.id_vehiculo)<3;
 ```
 
 
-o Muestra la matrícula y año de itv de los vehículos que pertenezcan a la categoría “coche” y que no se hayan reservado (turismo)
+Muestra la matrícula y año de itv de los vehículos que pertenezcan a la categoría “coche” y que no se hayan reservado (turismo)
 nunca. (050 puntos)
 ```
 SELECT 
@@ -495,8 +488,12 @@ tiempo de reserva del vehículo haya sido superior a las 5 horas.
 (0.2 puntos)
 ```
 UPDATE reservas r SET r.trayecto = 'largo' WHERE (SUBTIME( r.fin_alquiler,r.inicio_alquiler)>(MAKETIME(05,00,00)));
+```
+```
 UPDATE reservas r SET r.trayecto = 'medio' WHERE (SUBTIME( r.fin_alquiler,r.inicio_alquiler)<(MAKETIME(05,00,00))) AND 
 (SUBTIME( r.fin_alquiler,r.inicio_alquiler)>(MAKETIME(03,00,00)));
+```
+```
 UPDATE reservas r SET r.trayecto = 'corto' WHERE (SUBTIME( r.fin_alquiler,r.inicio_alquiler)<(MAKETIME(02,00,00)));
 ```
 
@@ -507,7 +504,7 @@ las reservas realizadas por clientes no españoles (0.2 puntos)
 CREATE OR REPLACE VIEW reservas_extranjeras_view AS SELECT r.* FROM reservas r WHERE r.id_cliente IN( SELECT c.id_cliente FROM clientes c WHERE c.id_pais!='ESP' );
 ```
 
-Realiza una copia de seguridad de la base de datos (0.1 punto)
+## Realiza una copia de seguridad de la base de datos (0.1 punto)
 
 Elimina la tabla de categorías (0.1 punto)
 ```
