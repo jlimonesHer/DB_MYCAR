@@ -1,7 +1,7 @@
 # DB_MYCAR
 Relational database for a car rental company with some queries.
 
-CREACION DE TABLAS
+## CREACION DE TABLAS
 ```
 CREATE TABLE pais (
 id_pais CHAR(3) NOT NULL,
@@ -10,7 +10,7 @@ PRIMARY KEY (id_pais),
 UNIQUE INDEX nombre_pais_UNIQUE (nombre_pais ASC)
 )
 ENGINE = InnoDB; 
-'''
+```
 
 CREATE TABLE clientes (
 	id_cliente INT NOT NULL AUTO_INCREMENT,
